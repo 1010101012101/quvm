@@ -1,19 +1,17 @@
 
 import BaseOperation from './base'
 
-class Gate {
+class OpaqueGate {
   /**
    * @constructor
    * @param {string} name
    * @param {Array<string>} params
    * @param {Array<string>} qargs
-   * @param {Array<BaseOperation>} body
    */
-  constructor(name, params, qargs, body) {
+  constructor(name, params, qargs) {
     this.name = name
     this.params = params
     this.qargs = qargs
-    this.body = body
   }
 
   /**
@@ -26,18 +24,18 @@ class Gate {
     const context = {}
     paramValues.forEach((looper, i) => context[this.params[i]] = looper)
     qargValues.forEach((looper, i) => context[this.qargs[i]] = looper)
-    state.runInSubScope(context, this.body)
+    // TODO
   }
 }
 
-export default class GateDeclOperation extends BaseOperation {
+export default class OpaqueDeclOperation extends BaseOperation {
   /**
    *
    * @param {State} state
    */
   execute(state) {
-    const [gatename, params, qargs, body] = this.args
-    const gate = new Gate(gatename, params, qargs, body)
+    const [gatename, params, qargs] = this.args
+    const gate = new OpaqueGate(gatename, params, qargs)
     state.addToCurrentScope(gatename, gate)
   }
 }

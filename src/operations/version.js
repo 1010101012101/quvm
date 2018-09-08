@@ -8,6 +8,7 @@ export default class VersionOperation extends BaseOperation {
    * @param {State} state
    */
   execute(state) {
+    console.log(this.args)
     const [version] = this.args
     state.addToGlobal(kVersionKey, version)
   }

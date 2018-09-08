@@ -32,8 +32,13 @@ export default class Library {
     }
   }
 
-  load(vm) {
+  /**
+   *
+   * @param {State} state
+   */
+  load(state) {
     const content = fs.readFileSync(this.path, {encoding: 'utf8'})
-    vm.run(content)
+    const operations = state.createOperationsFromCode(content, this.path)
+    operations.forEeach(op => op.execute(state))
   }
 }

@@ -9,7 +9,7 @@ export default class MeasureOperation extends BaseOperation {
     const creg = state.resolve(cregName)
     new All(Measure).or(qureg)
     qureg.forEach((qubit, i) => {
-      const value = this.engine.getMeasurementResult(qubit)
+      const value = state.engine.getMeasurementResult(qubit)
       creg[i] = value
     })
   }

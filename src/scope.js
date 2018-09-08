@@ -1,7 +1,15 @@
+/**
+ * @class Scope
+ */
 export default class Scope {
-  constructor(superScope) {
+  /**
+   * @constructor
+   * @param {Scope} superScope
+   * @param {{[string]: *}} values
+   */
+  constructor(superScope, values = {}) {
     this.super = superScope
-    this.pool = {}
+    this.pool = values
   }
 
   /**
@@ -12,6 +20,10 @@ export default class Scope {
     return typeof this.super === 'undefined'
   }
 
+    /**
+     * @param {string} name
+     * @param {*} value
+     */
   addValue(name, value) {
     this.pool[name] = value
   }

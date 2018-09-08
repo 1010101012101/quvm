@@ -1,10 +1,10 @@
 export default class BaseOperation {
   constructor(code, args, fileName, sourceCode, line) {
     this._code = code
-    this._args = args
-    this._sourceFileName = fileName
-    this._sourceCode = sourceCode
-    this._line = line
+    this.args = args
+    this.sourceFileName = fileName
+    this.sourceCode = sourceCode
+    this.line = line
   }
 
   /**
