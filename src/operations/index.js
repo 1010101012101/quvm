@@ -1,20 +1,21 @@
 import {OPCode} from 'qasm'
 import IndexOperation from './_index'
-import BarrierOperation from "./barrier";
-import CXOperation from "./cxop";
-import DeclOperation from "./decl";
-import GateDeclOperation from "./gatedecl";
-import IncludeOperation from "./include";
-import MeasureOperation from "./measure";
-import VersionOperation from "./version";
+import BarrierOperation from './barrier'
+import CXOperation from './cxop'
+import DeclOperation from './decl'
+import GateDeclOperation from './gatedecl'
+import IncludeOperation from './include'
+import MeasureOperation from './measure'
+import VersionOperation from './version'
 import OpaqueDeclOperation from './opaque'
 import CompareOperation from './compare'
 import GateOperation from './gateop'
+import UOperation from './uop'
 
 const {
   OP_INDEX, OP_ARRAY_INDEX, OP_BARRIER, OP_CX, OP_DECL_QREG, OP_DECL_CREG,
   OP_DECL_GATE, OP_INCLUDE, OP_MEASURE, OP_VERSION, OP_OPAQUE, OP_TEST,
-  OP_GATE_OP
+  OP_GATE_OP, OP_U
 } = OPCode
 
 export default {
@@ -30,5 +31,6 @@ export default {
   [OP_VERSION]: VersionOperation,
   [OP_OPAQUE]: OpaqueDeclOperation,
   [OP_TEST]: CompareOperation,
-  [OP_GATE_OP]: GateOperation
+  [OP_GATE_OP]: GateOperation,
+  [OP_U]: UOperation
 }

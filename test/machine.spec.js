@@ -7,6 +7,7 @@ describe('machine test', () => {
   it('should parse qasm source code', function () {
     const content = fs.readFileSync(path.resolve(__dirname, './test1.qasm'), {encoding: 'utf8'})
     const vm = new Machine()
-    vm.run(content, 'test1.qasm')
+    const state = vm.run(content, 'test1.qasm')
+    console.log(state.resolve('c'))
   });
 })

@@ -39,6 +39,6 @@ export default class Library {
   load(state) {
     const content = fs.readFileSync(this.path, {encoding: 'utf8'})
     const operations = state.createOperationsFromCode(content, this.path)
-    operations.forEeach(op => op.execute(state))
+    operations.forEach(op => op.execute(state))
   }
 }

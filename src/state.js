@@ -7,6 +7,8 @@ import {parse} from 'qasm'
 import BaseOperation from './operations/base'
 import Scope from './scope'
 import operations from './operations'
+import Library from './library'
+
 const {MainEngine} = cengines
 
 export default class State {
@@ -22,6 +24,8 @@ export default class State {
     this.current = this.scope
     this.global = this.scope
     this.resultStack = []
+
+    Library.addSearchPath(__dirname)
   }
 
   cleanResultStack() {
@@ -48,10 +52,15 @@ export default class State {
 
   /**
    *
-   * @param {string} name
+   * @param {string} arg
    */
-  resolve(name) {
-    return this.current.resolve(name)
+  resolve(arg) {
+    if (typeof arg === 'string') {
+      return this.current.resolve(arg)
+    } else {
+      const [name] = arg.args
+      return this.current.resolve(name)
+    }
   }
 
   /**
@@ -95,7 +104,11 @@ export default class State {
    * @return {*}
    */
   resolveList(nameList) {
-    return nameList.map(name => this.resolve(name))
+    if (Array.isArray(nameList)) {
+      return nameList.map(this.resolve)
+    } else {
+      return this.resolve(nameList)
+    }
   }
 
   /**
@@ -108,17 +121,19 @@ export default class State {
     const {value} = result
     const ops = []
     if (value && value.length > 0) {
-      value.forEach(looper => {
-        const Cls = operations[looper.code]
-        if (Cls) {
-          console.log(looper)
-          const op = new Cls(looper.code, looper.args, file, sourceCode)
-          ops.push(op)
-        } else {
-          throw new Error(`unknown operation: ${looper.code}`)
-        }
+      value.forEach((looper) => {
+        ops.push(this.operationFromConfig(looper, sourceCode, file))
       })
     }
     return ops
+  }
+
+  operationFromConfig(config, sourceCode, file) {
+    const Cls = operations[config.code]
+    if (Cls) {
+      return new Cls(config.code, config.args, file, sourceCode)
+    } else {
+      throw new Error(`unknown operation: ${config.code}`)
+    }
   }
 }

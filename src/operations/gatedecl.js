@@ -9,7 +9,7 @@ class Gate {
    * @param {Array<string>} qargs
    * @param {Array<BaseOperation>} body
    */
-  constructor(name, params, qargs, body) {
+  constructor(name, params, qargs, body = []) {
     this.name = name
     this.params = params
     this.qargs = qargs
@@ -26,7 +26,8 @@ class Gate {
     const context = {}
     paramValues.forEach((looper, i) => context[this.params[i]] = looper)
     qargValues.forEach((looper, i) => context[this.qargs[i]] = looper)
-    state.runInSubScope(context, this.body)
+    const bodyOps = this.body.map(looper => state.operationFromConfig(looper))
+    state.runInSubScope(context, bodyOps)
   }
 }
 

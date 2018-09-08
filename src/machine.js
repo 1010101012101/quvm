@@ -12,5 +12,6 @@ export default class Machine {
     const state = new State()
     const ops = state.createOperationsFromCode(code, file)
     ops.forEach(op => op.execute(state))
+    return state
   }
 }

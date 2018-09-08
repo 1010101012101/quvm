@@ -7,7 +7,8 @@ export default class IncludeOperation extends BaseOperation {
    * @param {State} state
    */
   execute(state) {
-    const [libraryName] = this.args
+    let [libraryName] = this.args
+    libraryName = libraryName.substring(1, libraryName.length - 1)
     const library = new Library(libraryName)
     library.load(state)
   }
