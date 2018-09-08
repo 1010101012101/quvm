@@ -1,0 +1,13 @@
+.idea
+node_modules
+build
+cmake-build-debug
+.nyc_output
+coverage
+out
+docs/es
+*.log
+*.node
+settings.json
+log.txt
+dist/
