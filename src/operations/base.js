@@ -25,6 +25,6 @@ export default class BaseOperation {
    * @return {string}
    */
   toString() {
-    return `${this.constructor.name}(${this._sourceCode || ''})`
+    return `${this.constructor.name}(${this.sourceCode || ''})`
   }
 }

@@ -6,6 +6,6 @@ export default class UOperation extends BaseOperation {
     const cids = state.resolveList(controlIDs)
     const qids = state.resolveList(qubits)
     // TODO
-    console.log(cids, qids)
+    console.log(9, typeof cids, typeof qids)
   }
 }

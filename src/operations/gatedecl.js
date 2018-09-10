@@ -9,10 +9,10 @@ class Gate {
    * @param {Array<string>} qargs
    * @param {Array<BaseOperation>} body
    */
-  constructor(name, params, qargs, body = []) {
+  constructor(name, params = [], qargs = [], body = []) {
     this.name = name
-    this.params = params
-    this.qargs = qargs
+    this.params = params.map(({args}) => args[0])
+    this.qargs = qargs.map(({args}) => args[0])
     this.body = body
   }
 

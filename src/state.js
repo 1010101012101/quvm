@@ -71,6 +71,12 @@ export default class State {
     let value = exp
     if (exp instanceof BaseOperation) {
       value = exp.execute(this)
+    } else {
+      const {code, args} = exp
+      if (code && args) {
+        exp = this.operationFromConfig(exp)
+        value = exp.execute(this)
+      }
     }
     this.resultStack.push(value)
   }
