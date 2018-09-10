@@ -46,7 +46,8 @@
     "instrument": false
   },
   "dependencies": {
+    "mathjs": "^5.1.2",
     "projectq": "^0.1.16",
-    "qasm": "^1.2.0"
+    "qasm": "^1.4.0"
   }
 }

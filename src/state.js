@@ -84,6 +84,7 @@ export default class State {
   /**
    *
    * @param {BaseOperation[]} exps
+   * @return {Array|any}
    */
   evaluateExpressionList(exps) {
     exps.forEach(looper => this.evaluateExpression(looper))

@@ -1,6 +1,6 @@
-import BaseOperation from './base'
 import {ops} from 'projectq'
 import {tuple} from 'projectq/dist/libs/util'
+import BaseOperation from './base'
 
 const {CNOT} = ops
 

@@ -1,5 +1,6 @@
-import BaseOperation from './base'
 import {ops} from 'projectq'
+import BaseOperation from './base'
+
 const {All, Measure} = ops
 
 export default class MeasureOperation extends BaseOperation {

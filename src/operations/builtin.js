@@ -1,5 +1,6 @@
 import math from 'mathjs'
 import {ops} from 'projectq'
+
 const {BasicGate} = ops
 
 const EPSILON = 1e-13
@@ -15,21 +16,26 @@ function trimValue(value) {
   return value
 }
 
+function iexp(angle) {
+  return math.complex(Math.cos(angle), Math.sin(angle))
+}
+
 export function UMatrix(theta, phi, lambda) {
-  const mc = math.complex
   const mm = math.multiply
-  const e = math.exp
-  const a = mm(e(mc(0, -(phi + lambda) / 2)), math.cos(theta / 2))
-  const b = mm(mm(e(mc(0, -(phi - lambda) / 2)), -1), math.sin(theta / 2))
-  const c = mm(e(mc(0, (phi - lambda) / 2)), math.sin(theta / 2))
-  const d = mm(e(mc(0, (phi + lambda) / 2)), math.cos(theta / 2))
+  const cost = Math.cos(theta / 2)
+  const sint = Math.sin(theta / 2)
+
+  const a = mm(iexp(-(phi + lambda) / 2), cost)
+  const b = mm(iexp(-(phi - lambda) / 2), -sint)
+  const c = mm(iexp((phi - lambda) / 2), sint)
+  const d = mm(iexp((phi + lambda) / 2), cost)
   return math.matrix([
     [trimValue(a), trimValue(b)],
     [trimValue(c), trimValue(d)]
   ])
 }
 
-class UniformGate extends BasicGate {
+class UnitaryGate extends BasicGate {
   constructor(theta, phi, lambda) {
     super()
     this.theta = theta
@@ -48,5 +54,5 @@ class UniformGate extends BasicGate {
 }
 
 export function U(theta, phi, lambda) {
-  return new UniformGate(theta, phi, lambda)
+  return new UnitaryGate(theta, phi, lambda)
 }
