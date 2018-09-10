@@ -1,6 +1,13 @@
+/**
+ * @class Debugger
+ */
 export default class Debugger {
-  constructor() {
-    //
+  /**
+   * @constructor
+   * @param {State} state
+   */
+  constructor(state) {
+    this.state = state
     this.breakpoints = []
   }
 
@@ -32,6 +39,10 @@ export default class Debugger {
   }
 
   stepOver() {
+
+  }
+
+  showVariable() {
 
   }
 }

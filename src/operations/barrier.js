@@ -10,8 +10,8 @@ export default class BarrierOperation extends BaseOperation {
    */
   execute(state) {
     const [idlist] = this.args
-    const operations = idlist.map(looper => state.createOperation(looper))
-    const list = operations.forEach(looper => looper.execute())
+    const operations = idlist.map(looper => state.operationFromConfig(looper))
+    const list = operations.map(looper => looper.execute(state))
     Barrier.or(list)
   }
 }

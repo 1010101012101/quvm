@@ -24,8 +24,18 @@ export default class State {
     this.current = this.scope
     this.global = this.scope
     this.resultStack = []
+    this.ops = []
+    this.currentOPIndex = -1
 
     Library.addSearchPath(__dirname)
+  }
+
+  get delegate() {
+    return this._delegate
+  }
+
+  set delegate(obj) {
+    this._delegate = obj
   }
 
   cleanResultStack() {
@@ -115,6 +125,26 @@ export default class State {
       return nameList.map(this.resolve)
     } else {
       return this.resolve(nameList)
+    }
+  }
+
+  /**
+   *
+   * @param {Array<BaseOperation>} ops
+   */
+  runOperations(ops = []) {
+    this.ops = ops.slice(0)
+    for (let i = 0; i < ops.length; ++i) {
+      const looper = ops[i]
+      this.currentOPIndex = i
+      if (this._delegate) {
+        // in debug session
+        if (this._delegate.shouldBreakAt(looper)) {
+          return
+        }
+      } else {
+        looper.execute(this)
+      }
     }
   }
 

@@ -1,8 +1,8 @@
 import math from 'mathjs'
 import {ops} from 'projectq'
-import BaseOperation from "./base";
+import {tuple} from 'projectq/dist/libs/util'
 
-const {BasicGate, X, Y, Z} = ops
+const {BasicGate, X, Y, Z, CX, Toffoli} = ops
 
 const EPSILON = 1e-13
 
@@ -60,19 +60,27 @@ export function U(theta, phi, lambda) {
 }
 
 class BuiltInGateOperation {
-  constructor(g) {
+  constructor(g, is1qubitGate) {
     this.g = g
+    this.is1qubitGate = is1qubitGate
   }
 
   execute(state, paramValues, qargValues) {
-    this.g.or(qargValues)
+    if (this.is1qubitGate) {
+      qargValues.forEach(looper => this.g.or(tuple(looper)))
+    } else {
+      this.g.or(tuple(...qargValues))
+    }
   }
 }
 
 export function getBuiltInGates() {
+  const toffoli = new BuiltInGateOperation(Toffoli)
   return {
-    x: new BuiltInGateOperation(X),
-    y: new BuiltInGateOperation(Y),
-    z: new BuiltInGateOperation(Z)
+    x: new BuiltInGateOperation(X, true),
+    y: new BuiltInGateOperation(Y, true),
+    z: new BuiltInGateOperation(Z, true),
+    cx: new BuiltInGateOperation(CX),
+    ccx: toffoli
   }
 }
