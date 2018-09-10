@@ -7,7 +7,6 @@ export default class GateOperation extends BaseOperation {
     const qargValues = state.evaluateExpressionList(qargs)
     const gate = state.resolve(gatename)
     gate.execute(state, paramValues, qargValues)
-    console.log(10, gatename, gate.body)
     state.cleanResultStack()
   }
 }

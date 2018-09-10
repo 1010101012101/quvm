@@ -38,7 +38,7 @@ export default class State {
    * @param {*} value
    */
   addToGlobal(name, value) {
-    this.global[name] = value
+    this.global.addValue(name, value)
   }
 
   /**

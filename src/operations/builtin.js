@@ -1,7 +1,8 @@
 import math from 'mathjs'
 import {ops} from 'projectq'
+import BaseOperation from "./base";
 
-const {BasicGate} = ops
+const {BasicGate, X, Y, Z} = ops
 
 const EPSILON = 1e-13
 
@@ -54,5 +55,24 @@ class UnitaryGate extends BasicGate {
 }
 
 export function U(theta, phi, lambda) {
-  return new UnitaryGate(theta, phi, lambda)
+  const gate = new UnitaryGate(theta, phi, lambda)
+  return gate
+}
+
+class BuiltInGateOperation {
+  constructor(g) {
+    this.g = g
+  }
+
+  execute(state, paramValues, qargValues) {
+    this.g.or(qargValues)
+  }
+}
+
+export function getBuiltInGates() {
+  return {
+    x: new BuiltInGateOperation(X),
+    y: new BuiltInGateOperation(Y),
+    z: new BuiltInGateOperation(Z)
+  }
 }

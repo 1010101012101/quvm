@@ -4,7 +4,8 @@
   "description": "Quantum Virtual Machine to run & debug qasm.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel-register --require babel-polyfill --recursive ./test",
+    "cover": "cross-env NODE_ENV=test nyc mocha --recursive ./test"
   },
   "author": "Isaac Liu",
   "license": "MIT",
